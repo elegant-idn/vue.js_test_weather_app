@@ -80,47 +80,19 @@ Follow these steps to set up the BreezeBlaze Weather App locally:
 Follow these steps to set up the BreezeBlaze Weather App locally:
 
 ```
-git clone https://github.com/Gaurav241/BreezeBlaze-Weather-App.git
+git clone https://github.com/elegant-idn/vue.js_test_weather_app.git
 ```
 
-2. **Navigate to the Project Directory:**
-
-```
-cd BreezeBlaze
-```
-
-Create .env File: Create a file named .env in the project directory. Add the following content to the .env file:
-or just rename .env.example to .env
-
-```
-VUE_APP_LOCATION_API_KEY=your_OpenCage_API_key_here
-VUE_APP_WEATHER_API_KEY=your_OpenWeatherMap_API_key_here
-```
-
-Replace your_OpenCage_API_key_here with your OpenCage Geocoding API key and your_OpenWeatherMap_API_key_here with your OpenWeatherMap API key.
-
-3. **Install Dependencies:**
+2. **Install Dependencies:**
 
 ```
 npm install
 ```
 
-4. **Run the App:**
+3. **Run the App:**
 
 ```
 npm run serve
 ```
 
-Once you have followed these steps, the BreezeBlaze Weather App should be up and running locally on your machine. Access the app by opening a web browser and navigating to http://localhost:8080 (or another port number if specified in the console output).
-
-## Contributions
-
-Contributions are welcome! Please feel free to submit issues and pull requests.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.
-
----
-
-Enjoy checking the weather with BreezeBlaze! If you have any questions or suggestions, feel free to reach out. Happy coding! ☀️🌦️
+Once you have followed these steps, the Weather App should be up and running locally on your machine. Access the app by opening a web browser and navigating to http://localhost:8080 (or another port number if specified in the console output).
