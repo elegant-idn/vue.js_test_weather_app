@@ -1,82 +1,84 @@
 <template>
-	<div class="row align-items-center">
-		<div class="col-3">
-			<content-loader v-if="loading" viewBox="0 0 340 84" :speed="2" primaryColor="#1b1a1d" secondaryColor="#434049">
-				<rect x="40" y="8" rx="3" ry="3" width="140" height="11" />
-				<circle cx="14" cy="14" r="14" />
-			</content-loader>
-			<h5 v-else style="display: inline">
-				<i class="bi bi-geo-alt" style="margin-right: 8px"></i>{{ weather.sys.country }}, {{ weather.name }}
-			</h5>
+	<fragment>
+		<div class="row align-items-center">
+			<div class="col-3">
+				<content-loader v-if="loading" viewBox="0 0 340 84" :speed="2" primaryColor="#1b1a1d" secondaryColor="#434049">
+					<rect x="40" y="8" rx="3" ry="3" width="140" height="11" />
+					<circle cx="14" cy="14" r="14" />
+				</content-loader>
+				<h5 v-else style="display: inline">
+					<i class="bi bi-geo-alt" style="margin-right: 8px"></i>{{ weather.sys.country }}, {{ weather.name }}
+				</h5>
+			</div>
+			<div class="col-6">
+				<search-cords-component @citySearch="getWeather"></search-cords-component>
+			</div>
+			<div class="col-3">
+				<a href="#">
+					<img class="float-end aleksandar-icon me-2" width="55" src="@/assets/images/avatar.jpeg" alt="aleksandar" />
+				</a>
+			</div>
 		</div>
-		<div class="col-6">
-			<search-cords-component @citySearch="getWeather"></search-cords-component>
-		</div>
-		<div class="col-3">
-			<a href="#">
-				<img class="float-end aleksandar-icon me-2" width="55" src="@/assets/images/avatar.jpeg" alt="aleksandar" />
-			</a>
-		</div>
-	</div>
-	<div class="mb-4"></div>
+		<div class="mb-4"></div>
 
-	<skeleton-loader v-if="loading"></skeleton-loader>
-	<div v-else class="row gy-3">
-		<!-- Main section -->
-		<div class="col-lg-9 col-12">
-			<div class="mb-3">
-				<div class="form-check form-switch">
-					<input class="form-check-input" type="checkbox" id="sliderCheckbox" v-model="sliderValue"
-						@change="toggleView" />
-					<label class="form-check-label" for="sliderCheckbox">
-						{{ isNextWeek ? "This Week Weather" : "Today's Weather" }}
-					</label>
+		<skeleton-loader v-if="loading"></skeleton-loader>
+		<div v-else class="row gy-3">
+			<!-- Main section -->
+			<div class="col-lg-9 col-12">
+				<div class="mb-3">
+					<div class="form-check form-switch">
+						<input class="form-check-input" type="checkbox" id="sliderCheckbox" v-model="sliderValue"
+							@change="toggleView" />
+						<label class="form-check-label" for="sliderCheckbox">
+							{{ isNextWeek ? "This Week Weather" : "Today's Weather" }}
+						</label>
+					</div>
+					<div>
+						<div v-if="isNextWeek">
+							<h3 class="mb-3" data-aos="fade-right">Week Weather</h3>
+							<div class="row gy-3 mb-5" data-aos="fade-down">
+								<div class="col-lg-11">
+									<weather-info-today :weather="weather"></weather-info-today>
+								</div>
+							</div>
+							<h3 class="mb-3" data-aos="fade-right">Next 5 Days</h3>
+							<div class="col-lg-11">
+								<weather-next-days-component :weatherDays="weatherDays"></weather-next-days-component>
+							</div>
+							<div>
+								<h3 class="mb-3" data-aos="fade-right">Average Week Temperature</h3>
+								<average-temperature :weatherDays="weatherDays" data-aos="zoom-in"></average-temperature>
+							</div>
+						</div>
+						<div v-else>
+							<h3 class="mb-3" data-aos="fade-right">Current Weather</h3>
+							<div class="row gy-3 mb-5" data-aos="fade-down">
+								<div class="col-lg-11">
+									<weather-info :weather="weather"></weather-info>
+								</div>
+							</div>
+							<h3 class="mb-3" data-aos="fade-right">Next Couple of Hours</h3>
+							<div class="col-lg-11">
+								<weather-next-hours-component :weatherHours="weatherHours"></weather-next-hours-component>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Lateral section -->
+			<div class="col-lg-3 col-12">
+				<div class="mb-3">
+					<h4 class="mb-3" data-aos="fade-left">Wind</h4>
+					<weather-chance-rain :windSpeed="windSpeed" :currentSpeed="weather.wind.speed"
+						:WindDirection="weather.wind.deg"></weather-chance-rain>
 				</div>
 				<div>
-					<div v-if="isNextWeek">
-						<h3 class="mb-3" data-aos="fade-right">Week Weather</h3>
-						<div class="row gy-3 mb-5" data-aos="fade-down">
-							<div class="col-lg-11">
-								<weather-info-today :weather="weather"></weather-info-today>
-							</div>
-						</div>
-						<h3 class="mb-3" data-aos="fade-right">Next 5 Days</h3>
-						<div class="col-lg-11">
-							<weather-next-days-component :weatherDays="weatherDays"></weather-next-days-component>
-						</div>
-						<div>
-							<h3 class="mb-3" data-aos="fade-right">Average Week Temperature</h3>
-							<average-temperature :weatherDays="weatherDays" data-aos="zoom-in"></average-temperature>
-						</div>
-					</div>
-					<div v-else>
-						<h3 class="mb-3" data-aos="fade-right">Current Weather</h3>
-						<div class="row gy-3 mb-5" data-aos="fade-down">
-							<div class="col-lg-11">
-								<weather-info :weather="weather"></weather-info>
-							</div>
-						</div>
-						<h3 class="mb-3" data-aos="fade-right">Next Couple of Hours</h3>
-						<div class="col-lg-11">
-							<weather-next-hours-component :weatherHours="weatherHours"></weather-next-hours-component>
-						</div>
-					</div>
+					<h4 class="mb-3" data-aos="fade-left">Other large cities</h4>
+					<weather-other-cities @selectLargeCity="getWeather"></weather-other-cities>
 				</div>
 			</div>
 		</div>
-		<!-- Lateral section -->
-		<div class="col-lg-3 col-12">
-			<div class="mb-3">
-				<h4 class="mb-3" data-aos="fade-left">Wind</h4>
-				<weather-chance-rain :windSpeed="windSpeed" :currentSpeed="weather.wind.speed"
-					:WindDirection="weather.wind.deg"></weather-chance-rain>
-			</div>
-			<div>
-				<h4 class="mb-3" data-aos="fade-left">Other large cities</h4>
-				<weather-other-cities @selectLargeCity="getWeather"></weather-other-cities>
-			</div>
-		</div>
-	</div>
+	</fragment>
 </template>
 
 <script>
