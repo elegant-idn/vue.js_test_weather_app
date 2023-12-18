@@ -20,7 +20,7 @@ This is a user-friendly weather application developed using Vue.js. It allows us
 
 ## Deployed Website
 
-You can access the deployed BreezeBlaze website at [breezeblaze.netlify.app](https://breezeblaze.netlify.app/).
+You can access the deployed website at https://vue-js-test-weather-app.vercel.app/.
 
 ## Features
 
@@ -69,7 +69,6 @@ You can access the deployed BreezeBlaze website at [breezeblaze.netlify.app](htt
 
 - **Vue.js:** Frontend framework for building user interfaces.
 - **OpenWeatherMap API:** Provides weather data for the app.
-- **OpenCage API:** Offers geolocation services for location-based data.
 
 ## Installation
 
