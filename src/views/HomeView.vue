@@ -1,84 +1,117 @@
 <template>
-	<fragment>
-		<div class="row align-items-center">
-			<div class="col-3">
-				<content-loader v-if="loading" viewBox="0 0 340 84" :speed="2" primaryColor="#1b1a1d" secondaryColor="#434049">
-					<rect x="40" y="8" rx="3" ry="3" width="140" height="11" />
-					<circle cx="14" cy="14" r="14" />
-				</content-loader>
-				<h5 v-else style="display: inline">
-					<i class="bi bi-geo-alt" style="margin-right: 8px"></i>{{ weather.sys.country }}, {{ weather.name }}
-				</h5>
-			</div>
-			<div class="col-6">
-				<search-cords-component @citySearch="getWeather"></search-cords-component>
-			</div>
-			<div class="col-3">
-				<a href="#">
-					<img class="float-end aleksandar-icon me-2" width="55" src="@/assets/images/avatar.jpeg" alt="aleksandar" />
-				</a>
-			</div>
-		</div>
-		<div class="mb-4"></div>
+  <fragment>
+    <div class="row align-items-center">
+      <div class="col-3">
+        <content-loader
+          v-if="loading"
+          viewBox="0 0 340 84"
+          :speed="2"
+          primaryColor="#1b1a1d"
+          secondaryColor="#434049"
+        >
+          <rect x="40" y="8" rx="3" ry="3" width="140" height="11" />
+          <circle cx="14" cy="14" r="14" />
+        </content-loader>
+        <h5 v-else style="display: inline">
+          <i class="bi bi-geo-alt" style="margin-right: 8px"></i
+          >{{ weather.sys.country }}, {{ weather.name }}
+        </h5>
+      </div>
+      <div class="col-6">
+        <search-cords-component
+          @citySearch="getWeather"
+        ></search-cords-component>
+      </div>
+      <div class="col-3">
+        <a href="#">
+          <img
+            class="float-end avatar-icon me-2"
+            width="55"
+            src="@/assets/images/avatar.jpg"
+            alt="avatar"
+          />
+        </a>
+      </div>
+    </div>
+    <div class="mb-4"></div>
 
-		<skeleton-loader v-if="loading"></skeleton-loader>
-		<div v-else class="row gy-3">
-			<!-- Main section -->
-			<div class="col-lg-9 col-12">
-				<div class="mb-3">
-					<div class="form-check form-switch">
-						<input class="form-check-input" type="checkbox" id="sliderCheckbox" v-model="sliderValue"
-							@change="toggleView" />
-						<label class="form-check-label" for="sliderCheckbox">
-							{{ isNextWeek ? "This Week Weather" : "Today's Weather" }}
-						</label>
-					</div>
-					<div>
-						<div v-if="isNextWeek">
-							<h3 class="mb-3" data-aos="fade-right">Week Weather</h3>
-							<div class="row gy-3 mb-5" data-aos="fade-down">
-								<div class="col-lg-11">
-									<weather-info-today :weather="weather"></weather-info-today>
-								</div>
-							</div>
-							<h3 class="mb-3" data-aos="fade-right">Next 5 Days</h3>
-							<div class="col-lg-11">
-								<weather-next-days-component :weatherDays="weatherDays"></weather-next-days-component>
-							</div>
-							<div>
-								<h3 class="mb-3" data-aos="fade-right">Average Week Temperature</h3>
-								<average-temperature :weatherDays="weatherDays" data-aos="zoom-in"></average-temperature>
-							</div>
-						</div>
-						<div v-else>
-							<h3 class="mb-3" data-aos="fade-right">Current Weather</h3>
-							<div class="row gy-3 mb-5" data-aos="fade-down">
-								<div class="col-lg-11">
-									<weather-info :weather="weather"></weather-info>
-								</div>
-							</div>
-							<h3 class="mb-3" data-aos="fade-right">Next Couple of Hours</h3>
-							<div class="col-lg-11">
-								<weather-next-hours-component :weatherHours="weatherHours"></weather-next-hours-component>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Lateral section -->
-			<div class="col-lg-3 col-12">
-				<div class="mb-3">
-					<h4 class="mb-3" data-aos="fade-left">Wind</h4>
-					<weather-chance-rain :windSpeed="windSpeed" :currentSpeed="weather.wind.speed"
-						:WindDirection="weather.wind.deg"></weather-chance-rain>
-				</div>
-				<div>
-					<h4 class="mb-3" data-aos="fade-left">Other large cities</h4>
-					<weather-other-cities @selectLargeCity="getWeather"></weather-other-cities>
-				</div>
-			</div>
-		</div>
-	</fragment>
+    <skeleton-loader v-if="loading"></skeleton-loader>
+    <div v-else class="row gy-3">
+      <!-- Main section -->
+      <div class="col-lg-9 col-12">
+        <div class="mb-3">
+          <div class="form-check form-switch">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="sliderCheckbox"
+              v-model="sliderValue"
+              @change="toggleView"
+            />
+            <label class="form-check-label" for="sliderCheckbox">
+              {{ isNextWeek ? "This Week Weather" : "Today's Weather" }}
+            </label>
+          </div>
+          <div>
+            <div v-if="isNextWeek">
+              <h3 class="mb-3" data-aos="fade-right">Week Weather</h3>
+              <div class="row gy-3 mb-5" data-aos="fade-down">
+                <div class="col-lg-11">
+                  <weather-info-today :weather="weather"></weather-info-today>
+                </div>
+              </div>
+              <h3 class="mb-3" data-aos="fade-right">Next 5 Days</h3>
+              <div class="col-lg-11">
+                <weather-next-days-component
+                  :weatherDays="weatherDays"
+                ></weather-next-days-component>
+              </div>
+              <div>
+                <h3 class="mb-3" data-aos="fade-right">
+                  Average Week Temperature
+                </h3>
+                <average-temperature
+                  :weatherDays="weatherDays"
+                  data-aos="zoom-in"
+                ></average-temperature>
+              </div>
+            </div>
+            <div v-else>
+              <h3 class="mb-3" data-aos="fade-right">Current Weather</h3>
+              <div class="row gy-3 mb-5" data-aos="fade-down">
+                <div class="col-lg-11">
+                  <weather-info :weather="weather"></weather-info>
+                </div>
+              </div>
+              <h3 class="mb-3" data-aos="fade-right">Next Couple of Hours</h3>
+              <div class="col-lg-11">
+                <weather-next-hours-component
+                  :weatherHours="weatherHours"
+                ></weather-next-hours-component>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Lateral section -->
+      <div class="col-lg-3 col-12">
+        <div class="mb-3">
+          <h4 class="mb-3" data-aos="fade-left">Wind</h4>
+          <weather-chance-rain
+            :windSpeed="windSpeed"
+            :currentSpeed="weather.wind.speed"
+            :WindDirection="weather.wind.deg"
+          ></weather-chance-rain>
+        </div>
+        <div>
+          <h4 class="mb-3" data-aos="fade-left">Other large cities</h4>
+          <weather-other-cities
+            @selectLargeCity="getWeather"
+          ></weather-other-cities>
+        </div>
+      </div>
+    </div>
+  </fragment>
 </template>
 
 <script>
@@ -95,201 +128,204 @@ import SkeletonLoader from "@/components/loader/SkeletonLoader.vue";
 import { ContentLoader } from "vue-content-loader";
 
 export default {
-	name: "HomeView",
-	components: {
-		WeatherInfo,
-		WeatherInfoToday,
-		SearchCordsComponent,
-		WeatherNextDaysComponent,
-		WeatherNextHoursComponent,
-		WeatherOtherCities,
-		WeatherChanceRain,
-		AverageTemperature,
-		ContentLoader,
-		SkeletonLoader,
-	},
-	data() {
-		return {
-			weather: {},
-			weatherDays: [],
-			windSpeed: [],
-			loading: false,
-			isNextWeek: false,
-			weatherHours: [],
-			sliderValue: 0,
-			city: { latitude: 0, longitude: 0 },
-		};
-	},
+  name: "HomeView",
+  components: {
+    WeatherInfo,
+    WeatherInfoToday,
+    SearchCordsComponent,
+    WeatherNextDaysComponent,
+    WeatherNextHoursComponent,
+    WeatherOtherCities,
+    WeatherChanceRain,
+    AverageTemperature,
+    ContentLoader,
+    SkeletonLoader,
+  },
+  data() {
+    return {
+      weather: {},
+      weatherDays: [],
+      windSpeed: [],
+      loading: false,
+      isNextWeek: false,
+      weatherHours: [],
+      sliderValue: 0,
+      city: { latitude: 0, longitude: 0 },
+    };
+  },
 
-	mounted() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(this.showPosition, this.showError);
-		} else {
-			alert('Geolocation is not supported by this browser.');
-		}
-	},
+  mounted() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        this.showPosition,
+        this.showError
+      );
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  },
 
-	created() {
-		this.getWeather(this.city);
-	},
+  created() {
+    this.getWeather(this.city);
+  },
 
-	methods: {
-		showPosition(position) {
-			this.city.latitude = position.coords.latitude;
-			this.city.longitude = position.coords.longitude;
-			this.getWeather(this.city);
-		},
+  methods: {
+    showPosition(position) {
+      this.city.latitude = position.coords.latitude;
+      this.city.longitude = position.coords.longitude;
+      this.getWeather(this.city);
+    },
 
-		showError(error) {
-			switch(error.code) {
-				case error.PERMISSION_DENIED:
-					alert("User denied the request for Geolocation.");
-				break;
-				case error.POSITION_UNAVAILABLE:
-					alert("Location information is unavailable.");
-				break;
-				case error.TIMEOUT:
-					alert("The request to get user location timed out.");
-				break;
-				case error.UNKNOWN_ERROR:
-					alert("An unknown error occurred.");
-				break;
-			}
-		},
-		
-		toggleView() {
-			this.isNextWeek = this.sliderValue == 1;
-		},
+    showError(error) {
+      switch (error.code) {
+        case error.PERMISSION_DENIED:
+          alert("User denied the request for Geolocation.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          alert("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          alert("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          alert("An unknown error occurred.");
+          break;
+      }
+    },
 
-		async getWeather(city) {
-			this.loading = true;
-			this.city = city;
+    toggleView() {
+      this.isNextWeek = this.sliderValue == 1;
+    },
 
-			await this.$axios
-				.get(
-					`${this.$weatherApi}/weather?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
-				)
-				.then(res => {
-					this.weather = res.data;
-				});
+    async getWeather(city) {
+      this.loading = true;
+      this.city = city;
 
-			this.getWeatherNextDays(city);
-			this.getWeatherNextHours(city);
-			this.getWindSpeed(city);
-		},
+      await this.$axios
+        .get(
+          `${this.$weatherApi}/weather?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
+        )
+        .then((res) => {
+          this.weather = res.data;
+        });
 
-		async getWeatherNextHours(city) {
-			// Clear the array
-			this.weatherHours = [];
+      this.getWeatherNextDays(city);
+      this.getWeatherNextHours(city);
+      this.getWindSpeed(city);
+    },
 
-			await this.$axios
-				.get(
-					`${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
-				)
-				.then((res) => {
-					// Filter and store hourly weather data for the next couple of hours
-					const currentTime = new Date().getTime() / 1000;
-					res.data.list.forEach((weather) => {
-						if (weather.dt > currentTime && this.weatherHours.length < 5) {
-							this.weatherHours.push(weather);
-						}
-					});
-				});
-		},
+    async getWeatherNextHours(city) {
+      // Clear the array
+      this.weatherHours = [];
 
-		async getWeatherNextDays(city) {
-			let auxWeather = [];
-			//Empty the array
-			this.weatherDays = [];
+      await this.$axios
+        .get(
+          `${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
+        )
+        .then((res) => {
+          // Filter and store hourly weather data for the next couple of hours
+          const currentTime = new Date().getTime() / 1000;
+          res.data.list.forEach((weather) => {
+            if (weather.dt > currentTime && this.weatherHours.length < 5) {
+              this.weatherHours.push(weather);
+            }
+          });
+        });
+    },
 
-			await this.$axios
-				.get(
-					`${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
-				)
-				.then(res => {
-					auxWeather = res.data.list;
-				});
+    async getWeatherNextDays(city) {
+      let auxWeather = [];
+      //Empty the array
+      this.weatherDays = [];
 
-			let auxDate = "";
-			const currenDate = new Date().toLocaleString("en-us", {
-				day: "numeric",
-				month: "long",
-				year: "2-digit",
-			});
-			auxWeather.forEach(weather => {
-				let weatherDate = new Date(weather.dt * 1000).toLocaleString("en-us", {
-					day: "numeric",
-					month: "long",
-					year: "2-digit",
-				});
+      await this.$axios
+        .get(
+          `${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
+        )
+        .then((res) => {
+          auxWeather = res.data.list;
+        });
 
-				if (auxDate != weatherDate && weatherDate != currenDate) {
-					this.weatherDays.push(weather);
-				}
+      let auxDate = "";
+      const currenDate = new Date().toLocaleString("en-us", {
+        day: "numeric",
+        month: "long",
+        year: "2-digit",
+      });
+      auxWeather.forEach((weather) => {
+        let weatherDate = new Date(weather.dt * 1000).toLocaleString("en-us", {
+          day: "numeric",
+          month: "long",
+          year: "2-digit",
+        });
 
-				auxDate = weatherDate;
-			});
-		},
+        if (auxDate != weatherDate && weatherDate != currenDate) {
+          this.weatherDays.push(weather);
+        }
 
-		async getWindSpeed(city) {
-			let allWeather = [];
+        auxDate = weatherDate;
+      });
+    },
 
-			//Clear speedWind
-			this.windSpeed = [];
+    async getWindSpeed(city) {
+      let allWeather = [];
 
-			await this.$axios
-				.get(
-					`${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
-				)
-				.then(res => {
-					allWeather = res.data.list;
-				});
+      //Clear speedWind
+      this.windSpeed = [];
 
-			allWeather.forEach(weather => {
-				if (this.windSpeed.length < 5)
-					this.windSpeed.push([
-						new Date(weather.dt_txt).toLocaleString("en-us", {
-							weekday: "short",
-							hour: "2-digit",
-							minute: "2-digit",
-						}),
-						weather.wind.speed,
-					]);
-			});
+      await this.$axios
+        .get(
+          `${this.$weatherApi}forecast?lat=${city.latitude}&lon=${city.longitude}&units=metric&appid=${this.$apikey}`
+        )
+        .then((res) => {
+          allWeather = res.data.list;
+        });
 
-			this.loading = false;
-		},
-	},
+      allWeather.forEach((weather) => {
+        if (this.windSpeed.length < 5)
+          this.windSpeed.push([
+            new Date(weather.dt_txt).toLocaleString("en-us", {
+              weekday: "short",
+              hour: "2-digit",
+              minute: "2-digit",
+            }),
+            weather.wind.speed,
+          ]);
+      });
+
+      this.loading = false;
+    },
+  },
 };
 </script>
 <style scoped>
 a {
-	text-decoration: none;
-	color: white;
+  text-decoration: none;
+  color: white;
 }
 
 a:hover {
-	text-decoration: underline;
+  text-decoration: underline;
 }
 
-.aleksandar-icon {
-	border-radius: 50%;
-	overflow: hidden;
-	height: 40px;
-	width: 40px;
+.avatar-icon {
+  border-radius: 50%;
+  overflow: hidden;
+  height: 40px;
+  width: 40px;
 }
 
 .form-check-input[type="checkbox"] {
-	width: 90px;
-	/* Set the width of the checkbox */
-	height: 40px;
-	/* Set the height of the checkbox */
+  width: 90px;
+  /* Set the width of the checkbox */
+  height: 40px;
+  /* Set the height of the checkbox */
 }
 
 .form-check-label {
-	font-size: 30px;
-	/* Set the font size of the label text */
-	margin-left: 10px;
-	/* Add some space between the checkbox and the label */
+  font-size: 30px;
+  /* Set the font size of the label text */
+  margin-left: 10px;
+  /* Add some space between the checkbox and the label */
 }
 </style>
